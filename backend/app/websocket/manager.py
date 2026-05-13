@@ -17,3 +17,7 @@ class WebSocketManager:
     async def broadcast(self, message: dict) -> None:
         for ws in self.connections.values():
             await ws.send_json(message)
+
+    async def close_all(self) -> None:
+        for client_id in list(self.connections.keys()):
+            await self.disconnect(client_id)

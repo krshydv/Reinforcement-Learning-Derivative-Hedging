@@ -1,3 +1,4 @@
+from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import ORJSONResponse, Response
@@ -11,12 +12,18 @@ from app.websocket.manager import WebSocketManager
 from app.websocket.router import router as ws_router
 
 configure_logging()
-app = FastAPI(title=settings.app_name, openapi_url=f"{settings.api_v1_str}/openapi.json", default_response_class=ORJSONResponse)
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    app.state.websocket_manager = WebSocketManager()
+    yield
+    await app.state.websocket_manager.close_all()
+
+app = FastAPI(title=settings.app_name, openapi_url=f"{settings.api_v1_str}/openapi.json", default_response_class=ORJSONResponse, lifespan=lifespan)
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_credentials=True, allow_methods=["*"], allow_headers=["*"])
 app.add_middleware(RateLimitMiddleware)
 app.include_router(api_router, prefix=settings.api_v1_str)
 app.include_router(ws_router)
-app.state.websocket_manager = WebSocketManager()
 logger = structlog.get_logger()
 
 @app.get("/health")
