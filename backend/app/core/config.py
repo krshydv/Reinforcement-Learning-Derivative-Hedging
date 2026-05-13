@@ -21,6 +21,9 @@ class Settings(BaseSettings):
     prometheus_port: int = 8001
     jwt_algorithm: str = "HS256"
     rate_limit: str = "100/minute"
+    training_log_dir: str = "/app/logs"
+    checkpoint_dir: str = "/app/checkpoints"
+    num_envs: int = 4
 
     @property
     def database_url(self) -> str:
