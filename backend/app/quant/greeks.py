@@ -10,3 +10,15 @@ class PortfolioGreeks:
             for k in totals:
                 totals[k] += greeks[k] * p["quantity"]
         return totals
+
+class VolSurface:
+    def generate(self, spot: float, rate: float, base_vol: float, strikes: list[float], tenors: list[float]) -> list[list[float]]:
+        surface = []
+        for tau in tenors:
+            row = []
+            for strike in strikes:
+                moneyness = np.log(strike / spot)
+                vol = base_vol * (1 + 0.25 * moneyness ** 2) * (1 + 0.1 * np.sqrt(tau))
+                row.append(float(max(0.01, vol)))
+            surface.append(row)
+        return surface

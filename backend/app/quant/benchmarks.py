@@ -1,10 +1,10 @@
-import numpy as np
+from app.quant.backtest import BacktestEngine
+
 
 def run_benchmarks() -> dict:
-    metrics = {
-        "black_scholes_delta": {"sharpe": 1.2, "drawdown": 0.1, "cvar": 0.05},
-        "delta_gamma": {"sharpe": 1.4, "drawdown": 0.08, "cvar": 0.04},
-        "static": {"sharpe": 0.8, "drawdown": 0.2, "cvar": 0.1},
-        "risk_parity": {"sharpe": 1.1, "drawdown": 0.12, "cvar": 0.06},
-    }
-    return metrics
+    engine = BacktestEngine(steps=252)
+    results = {}
+    for strat in ["delta", "delta_gamma", "static"]:
+        res = engine.run("delta" if strat == "delta" else strat)
+        results[strat] = res.metrics
+    return results

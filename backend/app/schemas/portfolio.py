@@ -10,3 +10,9 @@ class PortfolioRead(BaseModel):
 class PortfolioSnapshot(BaseModel):
     value: float
     pnl: float
+
+class PortfolioOverview(BaseModel):
+    netExposure: float
+    grossExposure: float
+    hedgeRatio: float
+    positions: list[dict]

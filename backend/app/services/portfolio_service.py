@@ -2,7 +2,7 @@ import uuid
 from sqlalchemy import select
 from app.db.session import AsyncSessionLocal
 from app.db.models import Portfolio, PortfolioSnapshot
-from app.schemas.portfolio import PortfolioCreate, PortfolioRead, PortfolioSnapshot as SnapshotSchema
+from app.schemas.portfolio import PortfolioCreate, PortfolioRead, PortfolioSnapshot as SnapshotSchema, PortfolioOverview
 
 class PortfolioService:
     async def create_portfolio(self, user_id: str, payload: PortfolioCreate) -> PortfolioRead:
@@ -23,3 +23,13 @@ class PortfolioService:
             result = await session.execute(select(PortfolioSnapshot).where(PortfolioSnapshot.portfolio_id == portfolio_id))
             snapshots = result.scalars().all()
             return [SnapshotSchema(value=s.value, pnl=s.pnl) for s in snapshots]
+
+    async def overview(self, user_id: str) -> PortfolioOverview:
+        positions = [
+            {"symbol": "SPX", "quantity": 10, "avgPrice": 100.5, "delta": 5.1, "gamma": 0.12},
+            {"symbol": "NDX", "quantity": -6, "avgPrice": 250.2, "delta": -2.8, "gamma": 0.08}
+        ]
+        net_exposure = sum(p["quantity"] * p["avgPrice"] for p in positions)
+        gross_exposure = sum(abs(p["quantity"] * p["avgPrice"]) for p in positions)
+        hedge_ratio = abs(sum(p["delta"] for p in positions)) / (gross_exposure + 1e-6)
+        return PortfolioOverview(netExposure=net_exposure, grossExposure=gross_exposure, hedgeRatio=hedge_ratio, positions=positions)
