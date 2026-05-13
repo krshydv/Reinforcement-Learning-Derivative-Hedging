@@ -31,9 +31,17 @@ spec:
               command:
                 - /bin/sh
                 - -c
-                - pgrep -f "celery -A app.worker.celery_app"
+                - "python -c 'import redis,os,sys;import urllib.parse as u;url=u.urlparse(os.environ.get("REDIS_URL",""));client=redis.Redis(host=url.hostname,port=url.port,db=int((url.path or "/0").lstrip("/")));client.ping();sys.exit(0)'"
             initialDelaySeconds: 30
             periodSeconds: 30
+          readinessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - "python -c 'import redis,os,sys;import urllib.parse as u;url=u.urlparse(os.environ.get("REDIS_URL",""));client=redis.Redis(host=url.hostname,port=url.port,db=int((url.path or "/0").lstrip("/")));client.ping();sys.exit(0)'"
+            initialDelaySeconds: 10
+            periodSeconds: 10
           lifecycle:
             preStop:
               exec:
