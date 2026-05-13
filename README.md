@@ -1,119 +1,196 @@
-Reinforcement Learning Derivative Hedging Platform
+# Reinforcement Learning Derivative Hedging Platform
 
-<p align="center">
-  <strong>Production-oriented quantitative research and reinforcement learning infrastructure for derivative hedging systems.</strong>
-</p>
-<p align="center">
-  FastAPI • Next.js • Reinforcement Learning • Quantitative Finance • Kubernetes • MLflow • Prometheus • Grafana
-</p>
+An enterprise-grade quantitative finance platform for **derivative pricing, risk analytics, portfolio management, and reinforcement learning–based hedging strategies**.
 
-⸻
+The platform combines modern quantitative research infrastructure with scalable backend systems, real-time analytics, ML training pipelines, and production-ready deployment architecture.
 
-Overview
+---
 
-The Reinforcement Learning Derivative Hedging Platform is a full-stack quantitative engineering and research system designed for developing, training, evaluating, and deploying reinforcement learning–driven derivative hedging strategies.
+# Overview
 
-The platform integrates:
+This project is designed to simulate and optimize derivative hedging strategies using **Reinforcement Learning (RL)** and advanced quantitative finance models.
 
-* quantitative pricing engines
-* reinforcement learning environments
-* backtesting infrastructure
-* real-time analytics dashboards
-* portfolio and risk systems
-* observability tooling
-* containerized runtime orchestration
-* Kubernetes deployment infrastructure
+The system integrates:
 
-The system is designed to support both advanced research workflows and production-grade deployment pipelines.
+- Reinforcement Learning training environments
+- Option pricing engines
+- Portfolio risk analytics
+- Backtesting infrastructure
+- Real-time websocket streaming
+- Production-grade backend APIs
+- Interactive frontend dashboards
+- Containerized deployment infrastructure
 
-⸻
+The objective is to create a scalable research and deployment platform for algorithmic hedging and quantitative trading workflows.
 
-Core Capabilities
+---
 
-Quantitative Finance Engine
+# Core Features
 
-* Black-Scholes option pricing
-* Monte Carlo simulation
-* Heston stochastic volatility modeling
-* Merton jump diffusion simulation
-* Greeks computation
-* Portfolio risk analytics
-* Regime-switching market simulation
-* Transaction-cost-aware environments
-* Backtesting and performance analysis
+## Quantitative Finance Engine
 
-⸻
+- Black-Scholes pricing
+- Monte Carlo simulation
+- Heston stochastic volatility model
+- Jump diffusion models
+- Greeks computation
+- Portfolio risk metrics
+- PnL analytics
+- Drawdown analysis
 
-Reinforcement Learning Infrastructure
+---
 
-* Reinforcement learning trading environments
-* Stable-Baselines3 integration
-* RL training orchestration
-* Experiment tracking with MLflow
-* Strategy evaluation pipelines
-* Risk-aware reward modeling
-* Training lifecycle management
+## Reinforcement Learning Infrastructure
 
-⸻
+- RL training environments
+- Stable-Baselines3 integration
+- Continuous-action hedging agents
+- Market simulation engine
+- Reward optimization pipelines
+- Strategy experimentation workflows
 
-Backend Services
+---
 
-* FastAPI service architecture
-* REST APIs
-* WebSocket streaming
-* JWT authentication
-* RBAC-ready authorization model
-* Structured service layers
-* Redis-backed runtime systems
-* Metrics instrumentation
-* Runtime health validation
+## Portfolio & Risk Management
 
-⸻
+- Portfolio exposure tracking
+- Risk analytics dashboard
+- Strategy monitoring
+- Performance metrics
+- Scenario analysis
+- Backtesting engine
 
-Frontend Platform
+---
 
-* Next.js dashboard architecture
-* Real-time market dashboards
-* Portfolio monitoring
-* Strategy analytics
-* Research workspaces
-* WebSocket live updates
-* React Query state synchronization
-* Modular panel system
-* Responsive UI architecture
+## Frontend Dashboard
 
-⸻
+- Interactive analytics dashboard
+- Real-time websocket updates
+- Multi-page Next.js frontend
+- Strategy visualization panels
+- Research monitoring interface
+- Training metrics visualization
 
-Infrastructure and DevOps
+---
 
-* Docker Compose orchestration
-* Kubernetes manifests
-* NGINX reverse proxy
-* Prometheus monitoring
-* Grafana dashboards
-* MLflow tracking server
-* Healthcheck and readiness validation
-* Runtime stabilization tooling
-* Service dependency management
+## Backend Infrastructure
 
-⸻
+- FastAPI backend services
+- REST API architecture
+- Websocket communication layer
+- Authentication system
+- Redis integration
+- PostgreSQL integration
+- MLflow experiment tracking
 
-Architecture
+---
 
+## Infrastructure & Deployment
+
+- Docker Compose orchestration
+- Kubernetes deployment manifests
+- NGINX reverse proxy
+- Prometheus monitoring
+- Grafana dashboards
+- Healthcheck systems
+- Runtime validation pipelines
+
+---
+
+# Tech Stack
+
+## Backend
+
+- Python
+- FastAPI
+- SQLAlchemy
+- PostgreSQL
+- Redis
+- Celery
+
+---
+
+## Machine Learning & Quant
+
+- PyTorch
+- Stable-Baselines3
+- NumPy
+- Pandas
+- SciPy
+
+---
+
+## Frontend
+
+- Next.js
+- React
+- TypeScript
+- Zustand
+- React Query
+
+---
+
+## DevOps & Infrastructure
+
+- Docker
+- Kubernetes
+- NGINX
+- Prometheus
+- Grafana
+- MLflow
+
+---
+
+# Architecture
+
+```text
+Frontend (Next.js)
+        │
+        ▼
+NGINX Reverse Proxy
+        │
+        ▼
+FastAPI Backend Services
+        │
+ ┌──────┼─────────┐
+ ▼      ▼         ▼
+Redis  PostgreSQL MLflow
+ │
+ ▼
+Celery Workers
+ │
+ ▼
+RL Training + Quant Engine
+```
+
+---
+
+# Project Structure
+
+```text
+Reinforcement-Learning-Derivative-Hedging/
+│
 ├── backend/
-│   ├── api/
-│   ├── quant/
-│   ├── services/
-│   ├── websocket/
-│   ├── middleware/
-│   └── db/
+│   ├── app/
+│   │   ├── api/
+│   │   ├── quant/
+│   │   ├── services/
+│   │   ├── websocket/
+│   │   ├── middleware/
+│   │   └── db/
+│   │
+│   ├── scripts/
+│   └── tests/
 │
 ├── frontend/
-│   ├── src/app/
-│   ├── components/
-│   ├── hooks/
-│   ├── lib/
-│   └── store/
+│   ├── src/
+│   │   ├── app/
+│   │   ├── components/
+│   │   ├── hooks/
+│   │   ├── store/
+│   │   └── lib/
+│   │
+│   └── public/
 │
 ├── infra/
 │   ├── kubernetes/
@@ -121,130 +198,142 @@ Architecture
 │   ├── prometheus/
 │   └── grafana/
 │
-└── docker-compose.yml
+├── docker-compose.yml
+├── README.md
+└── .env.example
+```
 
-⸻
+---
 
-Technology Stack
+# Installation
 
-Backend
+## Clone Repository
 
-* Python
-* FastAPI
-* SQLAlchemy
-* Redis
-* Celery
-* Stable-Baselines3
-* NumPy
-* Pandas
-* PostgreSQL
+```bash
+git clone https://github.com/your-username/Reinforcement-Learning-Derivative-Hedging.git
+```
 
-⸻
+## Move Into Project Directory
 
-Frontend
+```bash
+cd Reinforcement-Learning-Derivative-Hedging
+```
 
-* Next.js
-* React
-* TypeScript
-* Zustand
-* React Query
-* Tailwind CSS
+## Start Full Stack
 
-⸻
-
-Infrastructure
-
-* Docker
-* Kubernetes
-* NGINX
-* Prometheus
-* Grafana
-* MLflow
-
-⸻
-
-Local Development
-
-Prerequisites
-
-* Docker
-* Docker Compose
-* Node.js
-* Python 3.11+
-
-⸻
-
-Start the Platform
-
+```bash
 docker compose up --build
+```
 
-⸻
+---
 
-Runtime Services
+# Services
 
-Service	Port
-Frontend	3000
-API	8000
-MLflow	5000
-Grafana	3001
-Prometheus	9090
+| Service | Port |
+|---|---|
+| Frontend | 3000 |
+| Backend API | 8000 |
+| MLflow | 5000 |
+| Grafana | 3001 |
+| Prometheus | 9090 |
+| PostgreSQL | 5432 |
+| Redis | 6379 |
 
-⸻
+---
 
-Production Objectives
+# Current Development Status
 
-The platform is being engineered toward:
+## Completed
 
-* production-grade runtime reliability
-* scalable Kubernetes deployment
-* secure authentication and RBAC
-* persistent analytics infrastructure
-* quantitative correctness validation
-* CI/CD automation
-* observability and operational monitoring
-* resilient distributed services
-* research-to-production workflows
+- Quant pricing engine
+- RL training environment
+- FastAPI backend structure
+- Frontend dashboard shell
+- Docker infrastructure
+- Kubernetes manifests
+- Prometheus/Grafana integration
+- Websocket runtime stabilization
+- Runtime environment validation
+- MLflow integration
+- Deployment orchestration
 
-⸻
+---
 
-Current Status
+## In Progress
 
-Completed
+- RBAC enforcement
+- Websocket authentication
+- Production security hardening
+- Persistent analytics storage
+- Alembic migration chain
+- CI/CD pipelines
+- Real-time training persistence
+- Backend/frontend contract stabilization
 
-* backend API infrastructure
-* quantitative pricing engine
-* reinforcement learning environments
-* frontend analytics dashboard
-* Docker runtime orchestration
-* Prometheus and Grafana integration
-* MLflow infrastructure
-* Kubernetes deployment foundation
-* runtime stabilization and deployment coherence
+---
 
-In Progress
+# Production Roadmap
 
-* security hardening
-* persistence layer expansion
-* CI/CD pipelines
-* production validation
-* quantitative correctness validation
-* operational resilience improvements
+## Security Hardening
 
-⸻
+- JWT validation improvements
+- RBAC authorization layer
+- Secure websocket authentication
+- Secret management improvements
+- CORS tightening
 
-Research and Engineering Focus
+---
 
-This project explores the intersection of:
+## Infrastructure Stabilization
 
-* quantitative finance
-* reinforcement learning
-* distributed systems
-* cloud-native infrastructure
-* algorithmic trading systems
-* real-time analytics engineering
+- Runtime validation pipelines
+- Deployment reliability improvements
+- Kubernetes healthcheck refinement
+- Worker lifecycle management
 
-⸻
+---
 
-License
+## Quantitative Enhancements
 
-MIT License
+- RL reward stabilization
+- Market simulation refinement
+- Transaction cost modeling
+- Advanced backtesting realism
+- Research validation workflows
+
+---
+
+# Monitoring & Observability
+
+- Prometheus metrics
+- Grafana dashboards
+- Runtime healthchecks
+- Service readiness probes
+- API monitoring
+- Training telemetry
+
+---
+
+# Future Goals
+
+- Multi-agent RL hedging
+- Live market data integration
+- Institutional-grade risk systems
+- High-frequency simulation support
+- Distributed RL training
+- Cloud-native deployment
+- Strategy marketplace
+- Automated model evaluation
+
+---
+
+# License
+
+This project is licensed under the MIT License.
+
+---
+
+# Author
+KRISH YADAV
+
+Developed as a full-stack quantitative finance and reinforcement learning research platform focused on scalable derivative hedging infrastructure and production-grade quantitative systems.
