@@ -24,3 +24,4 @@ data:
   CHECKPOINT_DIR: /app/checkpoints
   NUM_ENVS: "4"
   NEXT_PUBLIC_API_URL: http://nginx/api/v1
+  NEXT_PUBLIC_WS_URL: ws://nginx
