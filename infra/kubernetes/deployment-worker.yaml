@@ -31,7 +31,7 @@ spec:
               command:
                 - /bin/sh
                 - -c
-                - celery -A app.worker.celery_app inspect ping -t 5
+                - pgrep -f "celery -A app.worker.celery_app"
             initialDelaySeconds: 30
             periodSeconds: 30
           lifecycle:
