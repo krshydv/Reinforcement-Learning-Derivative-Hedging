@@ -4,7 +4,7 @@ services:
     build:
       context: ./backend
     env_file:
-      - .env
+      - .env.example
     depends_on:
       postgres:
         condition: service_healthy
@@ -26,7 +26,7 @@ services:
     build:
       context: ./backend
     env_file:
-      - .env
+      - .env.example
     depends_on:
       redis:
         condition: service_healthy
@@ -110,7 +110,7 @@ services:
     build:
       context: ./frontend
     env_file:
-      - .env
+      - .env.example
     ports:
       - "3000:3000"
     depends_on:
