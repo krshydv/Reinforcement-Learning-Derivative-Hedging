@@ -1,6 +1,7 @@
 "use client"
 import { motion } from "framer-motion"
 import Link from "next/link"
+import { apiBase } from "../lib/api"
 import { useAuthStore } from "../store/useAppStore"
 
 export default function Page() {
@@ -26,7 +27,7 @@ export default function Page() {
             const email = (form.elements.namedItem("email") as HTMLInputElement).value
             const password = (form.elements.namedItem("password") as HTMLInputElement).value
             const body = new URLSearchParams({ username: email, password })
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/token`, {
+            const response = await fetch(`${apiBase()}/auth/token`, {
               method: "POST",
               headers: { "Content-Type": "application/x-www-form-urlencoded" },
               body

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { useAuthStore } from "../store/useAppStore"
+import { wsBase } from "../lib/api"
 
 export function useLiveStream() {
   const { token } = useAuthStore()
@@ -8,7 +9,7 @@ export function useLiveStream() {
 
   useEffect(() => {
     const clientId = Math.random().toString(36).slice(2)
-    const ws = new WebSocket(`${process.env.NEXT_PUBLIC_WS_URL}/ws/${clientId}?token=${token ?? ""}`)
+    const ws = new WebSocket(`${wsBase()}/ws/${clientId}?token=${token ?? ""}`)
     ws.onmessage = event => {
       const payload = JSON.parse(event.data)
       setMessages(prev => [payload, ...prev].slice(0, 12))
