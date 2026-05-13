@@ -1,0 +1,79 @@
+version: "3.9"
+services:
+  api:
+    build:
+      context: ./backend
+    env_file:
+      - .env
+    depends_on:
+      - postgres
+      - redis
+    ports:
+      - "8000:8000"
+      - "8001:8001"
+    command: ["/app/scripts/start.sh"]
+  worker:
+    build:
+      context: ./backend
+    env_file:
+      - .env
+    depends_on:
+      - redis
+      - postgres
+    command: ["/app/scripts/worker.sh"]
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: rl_hedging
+      POSTGRES_USER: rl_user
+      POSTGRES_PASSWORD: rl_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"
+  mlflow:
+    image: ghcr.io/mlflow/mlflow:latest
+    environment:
+      MLFLOW_TRACKING_URI: http://mlflow:5000
+    ports:
+      - "5000:5000"
+    command: ["mlflow","server","--host","0.0.0.0","--port","5000","--backend-store-uri","sqlite:///mlflow.db","--default-artifact-root","/mlruns"]
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./infra/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+  grafana:
+    image: grafana/grafana:latest
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: admin
+    ports:
+      - "3001:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+  frontend:
+    build:
+      context: ./frontend
+    env_file:
+      - .env
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
+  nginx:
+    image: nginx:latest
+    ports:
+      - "8080:80"
+    volumes:
+      - ./infra/nginx/nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - api
+      - frontend
+volumes:
+  postgres_data:
+  grafana_data:
