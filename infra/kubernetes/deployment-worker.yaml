@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: worker
+  namespace: rl-platform
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: worker
+  template:
+    metadata:
+      labels:
+        app: worker
+    spec:
+      containers:
+        - name: worker
+          image: rl-derivative-hedging-api:prod
+          imagePullPolicy: IfNotPresent
+          command:
+            - /bin/sh
+            - -c
+            - /app/scripts/worker.sh
+          envFrom:
+            - configMapRef:
+                name: rl-platform-config
+            - secretRef:
+                name: rl-platform-secrets
+          livenessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - celery -A app.worker.celery_app inspect ping -t 5
+            initialDelaySeconds: 30
+            periodSeconds: 30
+          lifecycle:
+            preStop:
+              exec:
+                command:
+                  - /bin/sh
+                  - -c
+                  - sleep 10
+      terminationGracePeriodSeconds: 30

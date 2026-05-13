@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rl-platform-config
+  namespace: rl-platform
+data:
+  APP_NAME: rl-derivative-hedging
+  ENV: production
+  API_V1_STR: /api/v1
+  ACCESS_TOKEN_EXPIRE_MINUTES: "60"
+  POSTGRES_HOST: postgres
+  POSTGRES_PORT: "5432"
+  POSTGRES_DB: rl_hedging
+  POSTGRES_USER: rl_user
+  REDIS_URL: redis://redis:6379/0
+  CELERY_BROKER_URL: redis://redis:6379/1
+  CELERY_RESULT_BACKEND: redis://redis:6379/2
+  MLFLOW_TRACKING_URI: http://mlflow:5000
+  WAND_B_PROJECT: rl-derivative-hedging
+  PROMETHEUS_PORT: "8001"
+  JWT_ALGORITHM: HS256
+  RATE_LIMIT: 100/minute
+  TRAINING_LOG_DIR: /app/logs
+  CHECKPOINT_DIR: /app/checkpoints
+  NUM_ENVS: "4"
+  NEXT_PUBLIC_API_URL: http://nginx/api/v1
