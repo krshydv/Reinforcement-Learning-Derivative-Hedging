@@ -19,8 +19,10 @@ async def lifespan(app: FastAPI):
     yield
     await app.state.websocket_manager.close_all()
 
+origins = [origin.strip() for origin in settings.cors_origins.split(",") if origin.strip()]
+
 app = FastAPI(title=settings.app_name, openapi_url=f"{settings.api_v1_str}/openapi.json", default_response_class=ORJSONResponse, lifespan=lifespan)
-app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_credentials=True, allow_methods=["*"], allow_headers=["*"])
+app.add_middleware(CORSMiddleware, allow_origins=origins, allow_credentials=True, allow_methods=["GET", "POST", "PUT", "PATCH", "DELETE"], allow_headers=["Authorization", "Content-Type"])
 app.add_middleware(RateLimitMiddleware)
 app.include_router(api_router, prefix=settings.api_v1_str)
 app.include_router(ws_router)

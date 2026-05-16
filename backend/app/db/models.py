@@ -13,6 +13,11 @@ class Permission(Base):
     id: Mapped[str] = mapped_column(String, primary_key=True)
     name: Mapped[str] = mapped_column(String, unique=True)
 
+class RolePermission(Base):
+    __tablename__ = "role_permissions"
+    role_id: Mapped[str] = mapped_column(String, ForeignKey("roles.id"), primary_key=True)
+    permission_id: Mapped[str] = mapped_column(String, ForeignKey("permissions.id"), primary_key=True)
+
 class UserRole(Base):
     __tablename__ = "user_roles"
     user_id: Mapped[str] = mapped_column(String, ForeignKey("users.id"), primary_key=True)

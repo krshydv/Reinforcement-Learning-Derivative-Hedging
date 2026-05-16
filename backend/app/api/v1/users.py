@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 from app.schemas.user import UserCreate, UserRead
 from app.services.user_service import UserService
-from app.services.auth_service import get_current_user
+from app.services.auth_service import get_current_user, require_permission
 
 router = APIRouter()
 
@@ -10,5 +10,5 @@ async def create_user(payload: UserCreate) -> UserRead:
     return await UserService().create_user(payload)
 
 @router.get("/me", response_model=UserRead)
-async def get_me(user=Depends(get_current_user)) -> UserRead:
+async def get_me(user=Depends(require_permission("access"))) -> UserRead:
     return user
