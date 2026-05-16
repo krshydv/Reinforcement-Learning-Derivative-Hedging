@@ -1,6 +1,6 @@
 from datetime import datetime
-from sqlalchemy import String, DateTime, ForeignKey, Integer, Float, Boolean
-from sqlalchemy.orm import Mapped, mapped_column, relationship
+from sqlalchemy import String, DateTime, ForeignKey, Integer, Float, Boolean, JSON
+from sqlalchemy.orm import Mapped, mapped_column
 from app.db.base import Base
 
 class Role(Base):
@@ -108,7 +108,19 @@ class Backtest(Base):
     user_id: Mapped[str] = mapped_column(String, ForeignKey("users.id"))
     name: Mapped[str] = mapped_column(String)
     status: Mapped[str] = mapped_column(String)
+    metrics: Mapped[dict] = mapped_column(JSON)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+
+class TrainingRun(Base):
+    __tablename__ = "training_runs"
+    id: Mapped[str] = mapped_column(String, primary_key=True)
+    user_id: Mapped[str] = mapped_column(String, ForeignKey("users.id"))
+    experiment_name: Mapped[str] = mapped_column(String)
+    algorithm: Mapped[str] = mapped_column(String)
+    timesteps: Mapped[int] = mapped_column(Integer)
+    status: Mapped[str] = mapped_column(String)
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
+    updated_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
 
 class AuditLog(Base):
     __tablename__ = "audit_logs"
