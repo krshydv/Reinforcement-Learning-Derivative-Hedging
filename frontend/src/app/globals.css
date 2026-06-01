@@ -1,0 +1,180 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+
+  --color-canvas: #06080d;
+  --color-surface: #0c1018;
+  --color-surface-raised: #111827;
+  --color-surface-overlay: #151d2e;
+
+  --color-border: rgba(148, 163, 184, 0.12);
+  --color-border-subtle: rgba(148, 163, 184, 0.06);
+  --color-border-strong: rgba(148, 163, 184, 0.22);
+
+  --color-ink-primary: #f1f5f9;
+  --color-ink-secondary: #cbd5e1;
+  --color-ink-muted: #94a3b8;
+  --color-ink-faint: #64748b;
+
+  --color-accent: #38bdf8;
+  --color-accent-muted: rgba(56, 189, 248, 0.15);
+  --color-accent-glow: rgba(56, 189, 248, 0.35);
+
+  --color-positive: #34d399;
+  --color-negative: #f87171;
+  --color-warning: #fbbf24;
+  --color-info: #60a5fa;
+
+  --radius-panel: 12px;
+  --radius-control: 8px;
+
+  --shadow-panel: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 12px 40px rgba(0, 0, 0, 0.45);
+  --shadow-elevated: 0 24px 64px rgba(0, 0, 0, 0.55);
+  --shadow-glow: 0 0 0 1px rgba(56, 189, 248, 0.2), 0 0 32px rgba(56, 189, 248, 0.12);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    @apply antialiased;
+  }
+
+  body {
+    @apply bg-canvas text-ink-primary font-sans;
+    background-image: radial-gradient(ellipse 120% 80% at 50% -20%, rgba(56, 189, 248, 0.06), transparent),
+      linear-gradient(180deg, #06080d 0%, #080b12 100%);
+    min-height: 100vh;
+  }
+
+  ::selection {
+    background: rgba(56, 189, 248, 0.25);
+    color: #f8fafc;
+  }
+}
+
+@layer components {
+  .panel {
+    @apply relative overflow-hidden rounded-panel border border-border bg-panel-gradient shadow-panel;
+  }
+
+  .panel::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, transparent 40%);
+  }
+
+  .panel-header {
+    @apply flex items-start justify-between gap-3 border-b border-border-subtle px-4 py-3;
+  }
+
+  .panel-body {
+    @apply p-4;
+  }
+
+  .data-table {
+    @apply w-full text-sm;
+  }
+
+  .data-table thead th {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    padding: 0.625rem 0.75rem;
+    text-align: left;
+    font-size: 0.625rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-ink-muted);
+    background: rgba(17, 24, 39, 0.95);
+    backdrop-filter: blur(8px);
+  }
+
+  .data-table tbody td {
+    border-top: 1px solid var(--color-border-subtle);
+    padding: 0.625rem 0.75rem;
+    color: var(--color-ink-secondary);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+  }
+
+  .data-table tbody tr:hover td {
+    background: rgba(21, 29, 46, 0.6);
+  }
+
+  .control-input {
+    width: 100%;
+    border-radius: var(--radius-control);
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    color: var(--color-ink-primary);
+    outline: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .control-input::placeholder {
+    color: var(--color-ink-faint);
+  }
+
+  .control-input:focus {
+    border-color: rgba(56, 189, 248, 0.5);
+    box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2);
+  }
+
+  .kbd {
+    display: inline-flex;
+    min-width: 1.25rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.25rem;
+    border: 1px solid var(--color-border-strong);
+    background: var(--color-surface-raised);
+    padding: 0.125rem 0.375rem;
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    line-height: 0.875rem;
+    color: var(--color-ink-muted);
+  }
+
+  .skeleton {
+    @apply relative overflow-hidden rounded-control bg-surface-raised;
+  }
+
+  .skeleton::after {
+    content: "";
+    @apply absolute inset-0;
+    background: linear-gradient(90deg, transparent, rgba(148, 163, 184, 0.08), transparent);
+    animation: shimmer 1.5s infinite;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Recharts */
+.recharts-cartesian-grid-horizontal line,
+.recharts-cartesian-grid-vertical line {
+  stroke: rgba(148, 163, 184, 0.08);
+}
+
+.recharts-brush rect {
+  fill: rgba(15, 23, 42, 0.8);
+  stroke: rgba(148, 163, 184, 0.2);
+}
